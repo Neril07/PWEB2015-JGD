@@ -1,6 +1,6 @@
 import time
 
-__author__ = 'svg'
+
 
 
 from handler import Handler

@@ -1,6 +1,5 @@
 import webapp2
 
-__author__ = 'svg'
 
 
 from google.appengine.ext import db

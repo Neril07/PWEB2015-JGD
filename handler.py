@@ -1,4 +1,3 @@
-__author__ = 'svg'
 # -*- coding: utf-8 -*-
 
 import os
@@ -9,8 +8,6 @@ import time
 import webapp2
 import jinja2
 
-from DB_Models import Professeur
-from DB_Models import Etudiant
 from DB_Models import Utilisateur
 from google.appengine.api import memcache
 import json
@@ -33,77 +30,8 @@ class Handler(webapp2.RequestHandler):
         cookie=self.request.cookies.get('user_info')
         self.write(self.render_str(template, cookie=cookie, **kw))
 
-    #par defaut on se connecte au project TN
-    def connexion(self, numeroProjet=9):
-        # se connecter a adeweb
-        content = urllib2.urlopen('https://adeweb.univ-lorraine.fr/jsp/webapi?sessionId=14541b5616e&function=connect&login=ade_projet_etu&password=;projet_2014').read()
-        # recuperer dans doc XML recu a partir de l url les donnees
-        # ici on se connecte : on recuperera donc le sessionId
-        contentXML = minidom.parseString(content)
-        #s= contentXML.getElementsByTagName("session")[0]
-        sessionId= contentXML.getElementsByTagName("session")[0].getAttribute('id')
-        content = urllib2.urlopen('https://adeweb.univ-lorraine.fr/jsp/webapi?sessionId=%s&function=setProject&projectId=9' % sessionId).read()
-        contentXML = minidom.parseString(content)
-        return sessionId
 
 
-
-    #@param  key est l'heure du coup on range les cours de 8H puis ceux de 9H puis 10H etc (par exemple) et donc prefer des  heures a la con genre 8H45, etc  comme ça on est quasi sur que ya cours si  il  doit y avoir cours a 8
-    def getCours(self,key,update=False):
-        courses=memcache.get(key)
-        if not(courses) or update:
-            courses=[]
-            sessionId=self.connexion()
-            date=time.strftime('%m/%d/%Y',time.localtime())
-            content=urllib2.urlopen('https://adeweb.univ-lorraine.fr/jsp/webapi?sessionId=%s&function=getEvents&detail=8&date=%s' % (sessionId,date)).read()
-            contentXML = minidom.parseString(content)
-            eventsList= contentXML.getElementsByTagName("event")
-            #heure = time.strftime('%H:%M',time.localtime())
-            heure=key
-            h,m = heure.split(':')[0],heure.split(':')[1]
-            h = int(h)+2
-            for event in eventsList:
-                #event=eventsList[i]
-                debut = str(event.getAttribute('startHour'))
-                fin =  str(event.getAttribute('endHour'))
-                hdebut, mdebut = int(debut.split(':')[0]),int(debut.split(':')[1])
-                hfin, mfin = int(fin.split(':')[0]),int(fin.split(':')[1])
-                if ((h==hdebut and m>=mdebut) or (h>hdebut and h<hfin) or (h==hfin and m<=mfin)):
-                    resources=event.getElementsByTagName('resource')
-                    name= event.getAttribute('name')
-                    classroom=''
-                    prof=''
-                    groupes=''
-                    module = ''
-                    for r in resources:
-                        if (r.getAttribute('category')=='classroom'):
-                            classroom=r.getAttribute('name')
-                        elif (r.getAttribute('category')=='instructor'):
-                            prof=r.getAttribute('name')
-                        elif (r.getAttribute('category')=='trainee'):
-                            groupes += r.getAttribute('name') +";"
-                        elif (r.getAttribute('category')=='category6'):
-                            module += r.getAttribute('name')
-                    courses.append({"name":name,"classroom":classroom,"prof":prof,"groupes":groupes,"heureDebut":debut,"heureFin":fin, "module":module})
-        return courses
-
-
-    def getNomsGroupsSansLeCache(self):
-       sessionId = self.connexion()
-       contentActif = urllib2.urlopen('https://adeweb.univ-lorraine.fr/jsp/webapi?sessionId=%s&function=getResources&detail=13' % sessionId).read()
-       contentXMLActif = minidom.parseString(contentActif)
-
-       resourcesList = contentXMLActif.getElementsByTagName('resource')
-       listeGroups = []
-
-       for resource in resourcesList:
-           if (resource.getAttribute('category')=='trainee'):
-               group = {}
-               group['name']= resource.getAttribute('name')
-               group['path'] = resource.getAttribute('path')
-               group['id'] = resource.getAttribute('id')
-               listeGroups.append(group)
-       return listeGroups
 
     def getNomsGroups(self, update=False):
          groupes = memcache.get('groupes')

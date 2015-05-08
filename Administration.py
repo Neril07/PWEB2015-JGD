@@ -1,11 +1,9 @@
 
-__author__ = 'svg'
 
 from handler import Handler
 import urllib2
 from xml.dom import minidom
-from DB_Models import Professeur
-from DB_Models import Etudiant
+
 from DB_Models import Utilisateur
 from google.appengine.ext import db
 import json
