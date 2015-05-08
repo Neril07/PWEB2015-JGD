@@ -2125,7 +2125,7 @@ fieldset[disabled] .btn-primary.active {
   //background-color: #5cb85c;
   //border-color: #4cae4c;
   //border-color: darkviolet;
-  background-color: #FF44DC;
+  background-color: #39b3d7;
 }
 .btn-success:hover,
 .btn-success:focus,
@@ -2135,7 +2135,7 @@ fieldset[disabled] .btn-primary.active {
   color: #fff;
   //background-color: #47a447;
   //border-color: #398439;
-    background-color: #FF44DC;
+    background-color: #39b3d7;
 }
 .btn-success:active,
 .btn-success.active,
@@ -4113,7 +4113,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
   color: #fff;
 }
 .navbar-pinky {
-  background-color: #FF44DC;
+  background-color: #269abc;
   border-color: #080808;
 }
 .navbar-pinky .navbar-brand {
@@ -4139,7 +4139,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 .navbar-pinky .navbar-nav > .active > a:hover,
 .navbar-pinky .navbar-nav > .active > a:focus {
   color: #fff;
-  background-color: #FF44DC;
+  background-color: #269abc;
 }
 .navbar-pinky .navbar-nav > .disabled > a,
 .navbar-pinky .navbar-nav > .disabled > a:hover,
@@ -5888,7 +5888,7 @@ button.close {
 }
 .tdEdT{
     border-width: 1px;
-    border-color: deeppink;
+    border-color: #39b3d7;
     border-style: solid;
     border-style: outset;
     border-radius: 20px;
@@ -5940,7 +5940,7 @@ button.close {
 .affichageEdT:hover .tdEdT
 {
     border-width: 1px;
-    border-color: deeppink;
+    border-color: #39b3d7;
     border-style: solid;
     border-style: outset;
     border-radius: 20px;
@@ -5968,7 +5968,7 @@ button.close {
 {
     border: outset mediumvioletred 1px;
     width: 75%;
-    background-color: lightpink;
+    background-color: #39b3d7;
 }
 .affichageCoursActuel
 {
@@ -5976,7 +5976,7 @@ button.close {
     text-align: center;
     width: 50%;
     vertical-align : top;
-    background-color: #FF44DC;
+    background-color: #269abc;
     float : left;
     color: #ffffff;
 }
