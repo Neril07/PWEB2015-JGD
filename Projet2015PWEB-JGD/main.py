@@ -15,11 +15,20 @@
 # limitations under the License.
 #
 import webapp2
-
-class MainHandler(webapp2.RequestHandler):
-    def get(self):
-        self.response.write('Hello world!')
+import handler
+import Administration
+import Authentification
 
 app = webapp2.WSGIApplication([
-    ('/', MainHandler)
+    ('/', handler.MainHandler),
+    ('/Administration/?',Administration.AdmistrationHandler),
+    ('/coursActuel?([0-9]*)', handler.CoursActuel),
+    ('/edtDuJour/?', handler.EdtDuJour),
+    ('/signin/?',Authentification.RegistrationHandler),
+    ('/login/?',Authentification.LoginHandler),
+    ('/listeAbsences/?', handler.ListeAbsences),
+    ('/compoGroupes/?', handler.CompoGroupes),
+    ('/justif/?',Administration.JustificationHandler),
+    ('/logout/?',Authentification.LogOutHandler),
+    ('/Absences?([0-9]*)',handler.AbsHandler)
 ], debug=True)
