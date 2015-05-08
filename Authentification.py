@@ -48,6 +48,13 @@ class RegistrationHandler(Handler):
         else:
             return 'enter a username!'
 
+    def pseudoUnvalid(self, pseudo):
+        if pseudo:
+            if not re.match("^[a-zA-Z0-9_-]{3,20}$" , pseudo):
+                return 'pseudo is unvalid!'
+        else:
+            return 'enter a pseudo!'
+
     def pwUnvalid(self, pw):
         if pw :
             if not re.match("^.{3,20}$", pw):
@@ -71,18 +78,19 @@ class RegistrationHandler(Handler):
         user=self.request.get('username')
         pw=self.request.get('password')
         pwbis=self.request.get('verify')
-        if (self.userUnvalid(user) or self.pwUnvalid(pw) or self.pwbisUnvalid(pw,pwbis)):
-            self.render("SignIn.html",user=user, pw=pw, usernameError= self.userUnvalid(user), passwordError= self.pwUnvalid(pw), verify= self.pwbisUnvalid(pw, pwbis))
+        pseudo=self.request.get('pseudo')
+        if (self.userUnvalid(user) or self.pwUnvalid(pw) or self.pwbisUnvalid(pw,pwbis) or self.pseudoUnvalid(pseudo)):
+            self.render("SignIn.html",user=user, pw=pw, usernameError= self.userUnvalid(user), passwordError= self.pwUnvalid(pw), verify= self.pwbisUnvalid(pw, pwbis), pseudoError=self.pseudoUnvalid(pseudo))
         else:
-            utilisateur=Utilisateur.getUtilisateur(user)
+            utilisateur=Utilisateur.getUtilisateurByPseudo(pseudo)
             if not(utilisateur):
                 pw=str(make_secure_val(pw))
-                u=Utilisateur.Utilisateur(login=user, mdp=pw)
+                u=Utilisateur.Utilisateur(login=user, mdp=pw, pseudo=pseudo)
                 u.put()
                 time.sleep(1)
                 self.redirect('/login')
             else:
-                self.render("SignIn.html",user=user, usernameError="ce login est deja utilise", passwordError="", verify="")
+                self.render("SignIn.html",user=user, userError="" , passwordError="", verify="", pseudoError="ce pseudo est deja utilise")
 
 class LoginHandler(Handler):
     def get(self):
@@ -99,7 +107,7 @@ class LoginHandler(Handler):
                 expire="; expires=31-Dec-2020 23:59:59 GMT"
             else:
                 expire=""
-            self.response.headers.add_header('Set-Cookie', 'user_info=username=%s:pw=%s:justification=%s:admin=%s ; Path=/ %s' % (str(make_secure_val(login)), pw, str(utilisateur.droitJustification),str(utilisateur.droitAdministration), expire))
+            self.response.headers.add_header('Set-Cookie', 'user_info=username=%s:pw=%s:pseudo=%s ; Path=/ %s' % (str(make_secure_val(login)), pw, str(utilisateur.pseudo), expire))
             self.redirect('/')
 
 class LogOutHandler(Handler):

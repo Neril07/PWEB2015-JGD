@@ -75,13 +75,7 @@ class MainHandler(Handler):
             if Authentification.validCookie(cookie) is None:
                 values=cookie.split(":")
                 utilisateur=Utilisateur.getUtilisateur(values[0])
-                if utilisateur.resource:
-                    user = Professeur.getProfesseurByName(utilisateur.resource)
-                    if len(user)==0:
-                        user = Etudiant.getEtudiantByName(utilisateur.resource)
-                        self.redirect("/coursActuel"+str(user[0].id))
-                    else:
-                        self.redirect("/coursActuel"+str(user[0].id))
+                self.redirect("/coursActuel"+str(utilisateur.pseudo))
             else:
                 self.render("Identification.html")
         else:
