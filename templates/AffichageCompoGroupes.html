@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+    <head>
+
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="">
+        <meta name="author" content="">
+
+
+        <title>Grolem</title>
+
+        <!-- Bootstrap core CSS -->
+        <link href="framework/bootstrap/css/bootstrap.css" rel="stylesheet">
+        <link href="stylesheets/customize.css"  rel="stylesheet">
+    </head>
+    <body>
+
+        {% include 'navbar.html' %}
+        <div class="container">
+            <div class="jumbotron">
+                <br><br>
+                Selectionnez le groupe dont vous voulez voir la composition :
+                <br><br>
+                <form method="post" action="/compoGroupes">
+
+                    <!-- liste deroulante des groupes -->
+                    <select name="groupe">
+                        {% for groupe in groupes: %}
+                            <option value="{{ groupe['name'] }}"> {{ groupe['name'] }} </option>
+                        {% endfor %}
+                    </select>
+                    <br><br>
+                    <input type="submit" value="Celui-ci !" class="btn btn-success">
+                </form>
+
+                    <br><br>
+
+                    <i>{{ erreur }}</i>
+
+                {%  if groupe: %}
+                    <h3>Composition du groupe {{ groupe }}</h3>
+
+                    Il y a en tout {{ nb }} etudiants.<br><br>
+
+                        {% for membre in membres: %}
+                            {{ membre.nomPrenom }}
+                            <br>
+                        {% endfor %}
+                {%  endif %}
+
+            </div>
+        </div>
+
+        <!-- Bootstrap core JavaScript
+        ================================================== -->
+        <!-- Placed at the end of the document so the pages load faster -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+        <script src="framework/bootstrap/js/bootstrap.min.js"></script>
+
+    </body>
+</html>

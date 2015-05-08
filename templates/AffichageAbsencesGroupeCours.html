@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+
+    <title>Grolem</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="framework/bootstrap/css/bootstrap.css" rel="stylesheet">
+    <link href="stylesheets/customize.css"  rel="stylesheet">
+</head>
+<body>
+
+    {% include 'navbar.html' %}
+
+    <div class="container">
+        <div class="jumbotron">
+            <br><br>
+            Absences au cours {{ cours }} dans le groupe {{ groupe }} : {{ nbAbs }}
+            <br><br>
+            <table class="tableAffAbs">
+                <thead>
+                    <tr>
+                        <td class="tdAffAbs1"><b>Date</b></td>
+                        <td class="tdAffAbs1"><b>Horaires</b></td>
+                        <td class="tdAffAbs2"><b>Absents</b></td>
+                    </tr>
+                </thead>
+                <tfoot>
+                    <tr>
+
+                    </tr>
+                </tfoot>
+
+                <tbody>
+                    {% set i=0 %}
+                    {% for absDate in absences: %}
+                        {% for absHeureDebut in absences[absDate]: %}
+                            {% for absHeureFin in absences[absDate][absHeureDebut]: %}
+                                {% if (i%2==0): %}
+                                    {% set color='seashell' %}
+                                {% else: %}
+                                    {% set color='white' %}
+                                {% endif %}
+                                {% set i=i+1 %}
+                                <tr>
+                                    <td class="tdAffAbs1" style="background-color: {{ color }}"> {{ absDate }} </td>
+                                    <td class="tdAffAbs1" style="background-color: {{ color }}"> {{ absHeureDebut }}h - {{ absHeureFin }}h </td>
+                                    <td class="tdAffAbs2" style="background-color: {{ color }}">
+                                        {% set j=0 %}
+                                        {% for a in absences[absDate][absHeureDebut][absHeureFin] : %}
+                                            {% if j!=0: %}
+                                                ,
+                                            {% endif %}
+                                            {% set j = j+1 %}
+                                            {{ a }}
+                                        {% endfor %}
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        {% endfor %}
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script src="framework/bootstrap/js/bootstrap.min.js"></script>
+
+</body>
+</html>

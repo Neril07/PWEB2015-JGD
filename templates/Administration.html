@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+
+    <title>Grolem</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="framework/bootstrap/css/bootstrap.css" rel="stylesheet">
+    <link href="stylesheets/customize.css"  rel="stylesheet">
+</head>
+<body>
+
+    {% include 'navbar.html' %}
+
+    <div class="container">
+        <div class="jumbotron">
+        {% if youpi == "" %}
+                <br><br>
+                Quel projet a recup?
+                <br>
+                <form method="post" action="/Administration">
+                    <input type="text" name="numProjet">
+                    <input type="submit" name="nomUtilisateur" value="Mettre a jour la base" class="btn btn-success">
+                    <br><br>
+                    <i>{{ erreur }}</i>
+                </form>
+        {% else %}
+            <br>
+            <p>{{ youpi }}</p>
+        {% endif %}
+        </div>
+
+        <div class="jumbotron">
+        {% if youpi2 == "" %}
+                <br><br>
+                Quel compte utilisaeur voulez vous lier a quel Etudiant/prof?
+                <br>
+                <form method="post" action="/Administration">
+                    <label>Compte Utilisateur</label>
+                    <select class="form-control" name="compte">
+                        {% for compte in utilisateurs %}
+                        <option value="{{ compte.login }}">{{ compte.login }}
+                        {% endfor %}
+                    </select>
+                    <label>Etudiant/Prof a lier</label>
+                    <select class="form-control" name="resource">
+                        {% for resource in resources %}
+                        <option value="{{ resource.id }}">{{ resource.nomPrenom }}
+                        {% endfor %}
+                    </select>
+                    <br/>
+                    <input type="submit" name="nomUtilisateur" value="lier cette utilisateur"
+                            >
+                    <br><br>
+                    <i>{{ erreur2 }}</i>
+                </form>
+        {% else %}
+            <br>
+            <p>{{ youpi2 }}</p>
+        {% endif %}
+        </div>
+
+        <div class="jumbotron">
+        {% if youpi3 == "" %}
+                <br><br>
+                Quel compte utilisaeur voulez vous lier a quel Etudiant/prof?
+                <br>
+                <form method="post" action="/Administration">
+                    <label>Compte Utilisateur</label>
+                    <select class="form-control" name="compte">
+                        {% for compte in utilisateurs %}
+                        <option value="{{ compte.login }}">{{ compte.login }}
+                        {% endfor %}
+                    </select>
+                    <br/>
+                    <input type="submit" name="nomUtilisateur" value="lier cette utilisateur"
+                            >
+                    <br><br>
+                    <i>{{ erreur3 }}</i>
+                </form>
+        {% else %}
+            <br>
+            <p>{{ youpi3 }}</p>
+        {% endif %}
+        </div>
+
+    </div>
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script src="framework/bootstrap/js/bootstrap.min.js"></script>
+
+</body>
+</html>
