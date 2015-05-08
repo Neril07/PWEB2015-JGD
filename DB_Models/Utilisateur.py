@@ -30,15 +30,11 @@ def getUtilisateur(key,update=False):
 def setUtilisateur(utilisateur):
     memcache.set(utilisateur.login,utilisateur)
 
-def lierUtilisateurResource(login, resourceId):
-    utilisateur=getUtilisateur(login)
-    utilisateur.resource=resourceId
-    utilisateur.put()
-    getUtilisateur(login,update=True)
+def getUtilisateurByPseudo(pseudo) :
+    utilisateur = db.GqlQuery("SELECT * FROM Utilisateur WHERE pseudo = '%s'" % pseudo).fetch(limit=1)
+    return utilisateur
 
 class Utilisateur(db.Model):
     login=db.StringProperty(required=True)
     mdp=db.StringProperty(required=True)
-    resource=db.StringProperty(required=False)
-    droitJustification=db.BooleanProperty(default=False)
-    droitAdministration=db.BooleanProperty(default=False)
+    pseudo=db.StringProperty(required=True)
