@@ -5876,32 +5876,9 @@ button.close {
 }
 /*# sourceMappingURL=framework.css.map */
 
-.affichageEdT{/*
-    border-width: 1px;
-    border-color: deeppink;
-    border-style: solid;
-    border-style: outset;
-    border-radius: 20px;
-    width: 50%;
-    background-color: antiquewhite;
-    text-align: center;*/
-}
-.tdEdT{
-    border-width: 1px;
-    border-color: #39b3d7;
-    border-style: solid;
-    border-style: outset;
-    border-radius: 20px;
-    width : 25%;
-    background-color: antiquewhite;
-    text-align: center;
-}
-.tableEdT
-{
-    border-collapse: separate;
-    border-spacing: 5px 5px;
-    width : 100%;
-}
+
+
+
 .tdSecret
 {
     width: 75%;
@@ -5918,35 +5895,6 @@ button.close {
     background-color: seashell;
     text-align: center;
     horizontal-align: top;
-}
-
-.affichageEdT:hover .secret
-{
-    display: inline-block;
-    horizontal-align: top;
-}
-
-.affichageEdT:hover
-{/*
-    border-width: 1px;
-    border-color: blue;
-    border-style: solid;
-    border-style: outset;
-    border-radius: 20px;
-    background-color: deepskyblue;
-    text-align: center;*/
-}
-
-.affichageEdT:hover .tdEdT
-{
-    border-width: 1px;
-    border-color: #39b3d7;
-    border-style: solid;
-    border-style: outset;
-    border-radius: 20px;
-    width : 25%;
-    background-color: antiquewhite;
-    text-align: center;
 }
 
 .tdAffAbs1
@@ -5970,36 +5918,8 @@ button.close {
     width: 75%;
     background-color: #39b3d7;
 }
-.affichageCoursActuel
-{
-    display: inline-block;
-    text-align: center;
-    width: 50%;
-    vertical-align : top;
-    background-color: #269abc;
-    float : left;
-    color: #ffffff;
-}
 
-.affichageCoursActuelEleves
+.content-subject
 {
-    display : inline-block;
-    text-align: center;
-    width: 50%;
-    vertical-align : top;
-
-}
-
-.affichageCoursActuelEleve
-{
-    margin-left: 10%;
-}
-
-.affichageCoursActuelElevesListe
-{
-    border: outset darkviolet 1px;
-    overflow: auto;
-    height: 400px;
-    text-align: left;
-    background-color: #fff3f4;
+    text-decoration: underline;
 }
