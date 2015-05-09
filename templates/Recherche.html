@@ -25,8 +25,13 @@
                 <br>
                 <form method="post" action="/coursActuel">
                     <input type="text" name="recherche">
+                    <select name=""type">
+                        <option value="Ville">Ville</option>
+                        <option value="Pseudo">Pseudo</option>
+                    </select>
                     <input type="submit" class="btn btn-success">
                     <br><br>
+
                     <i>{{ erreur }}</i>
                 </form>
             </div>

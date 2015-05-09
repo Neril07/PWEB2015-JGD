@@ -18,6 +18,7 @@ import webapp2
 import handler
 import Administration
 import Authentification
+import Recherche
 
 app = webapp2.WSGIApplication([
     ('/', handler.MainHandler),
@@ -28,5 +29,5 @@ app = webapp2.WSGIApplication([
     ('/createTache', handler.Create),
     ('/AfficherTache', handler.AfficherTache),
     ('/ClearTaches', handler.ClearTable),
-    ('/')
+    ('/recherche', Recherche.Recherche)
 ], debug=True)
