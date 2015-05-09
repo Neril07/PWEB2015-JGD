@@ -13,7 +13,6 @@ from DB_Models import Tache
 from DB_Models import Utilisateur
 from google.appengine.api import memcache
 import json
-from google.appengine.ext import db
 
 
 
@@ -154,12 +153,13 @@ class ClearTable(Handler):
 
 
 class TachePage(Handler):
-    def get(self, valeurid):
-       # test = Tache.getTache(valeurid)
-        key = db.Key.from_path('Tache', int(valeurid), parent=Tache.tache_key())
-        test = db.get(key)
-        #taches = Tache.getTaches()
-        self.render("Tache.html",tache = test)
+    def get(self, post_id):
+        tache = Tache.getTache(post_id)
+        self.render("Tache.html", tache = tache)
+        if not tache:
+            self.error(404)
+            return
+        self.render("Tache.html", tache = tache)
 
 class ClearUtilisateur(Handler):
         def get(self):
