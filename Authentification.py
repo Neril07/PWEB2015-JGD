@@ -71,7 +71,7 @@ class RegistrationHandler(Handler):
             else:
                 return 're-enter your password!'
 
-    def get(self):
+    def get(self,test):
         self.render("SignIn.html")
 
     def post(self):
