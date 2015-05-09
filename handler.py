@@ -67,7 +67,9 @@ class Handler(webapp2.RequestHandler):
 
 class MainHandler(Handler):
     def render_font(self):
-        self.render('HomePageTache.html')
+
+        taches= Tache.getTaches(True)
+        self.render('HomePageTache.html',taches = taches)
 
     def get(self):
         taches= Tache.getTaches(True)
@@ -86,19 +88,6 @@ class MainHandler(Handler):
             self.render("HomePageTache.html", taches=taches)
 
 
-    def post(self):
-        pseudo = self.request.get('nomUtilisateur').upper()
-        # on cherche la base de donnees
-        if (not pseudo):
-            self.render('Identification.html', erreur="Aucun utilisateur n'a ete entre")
-        elif pseudo:
-            #user = None
-            #assert isinstance(user, model.Professeur)
-            user = Utilisateur.getUtilisateurByPseudo(pseudo)
-            if not user:
-                self.render('Identification.html', erreur="Nous n avons pas trouve la personne demandee.")
-            else:
-                self.redirect("/coursActuel"+str(user.pseudo))
 
 class Create(Handler):
     def render_front(self, titre="", ville="", prix="", error="",user=""):
@@ -137,8 +126,8 @@ class Create(Handler):
             pseudo="default"
 
         if titre and ville:
-            Tache.setTache(titre=titre, ville=ville, pseudo="%s"%pseudo, prix=prix)
-            self.redirect('/' )
+            Tache.setTache(titre=titre, ville=ville, user="%s"%pseudo, prix=prix)
+            self.redirect('/AfficherTache' )
         else :
             error = "Il faut un titre et un contenu"
             self.render_front(titre=titre, ville=ville, prix=prix, error=error)
@@ -147,7 +136,7 @@ class AfficherTache(Handler):
 
     def get(self):
         taches = Tache.getTaches()
-        self.render("HomePageTache.html")
+        self.render("HomePageTache.html",taches = taches)
 
     def post(self):
         titre = self.request.get('titre')
@@ -173,5 +162,12 @@ class AfficherTache(Handler):
         else :
             error = "Il faut un titre et un contenu"
             self.render_front(titre=titre, ville=ville, prix=prix, error=error)
+
+class ClearTable(Handler):
+        def get(self):
+            taches = Tache.getTaches()
+            for tache in taches :
+                Tache.suppTache(tache)
+            self.redirect("/")
 
 import Authentification

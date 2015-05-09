@@ -55,7 +55,7 @@ class Tache(db.Model):
     participants=db.StringListProperty(default=None)
     date=db.DateTimeProperty(auto_now_add = True)
 
-def setTache(titre,ville,pseudo,prix):
-    t = Tache(parent=tache_key(),titre=titre, ville=ville, user="%s"%pseudo, prix=prix)
+def setTache(titre,ville,user,prix):
+    t = Tache(parent=tache_key(),titre=titre, ville=ville, user="%s"%user, prix=prix)
     t.put()
     return t.key().id()
