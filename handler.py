@@ -121,9 +121,9 @@ class Create(Handler):
         if cookie:
             if Authentification.validCookie(cookie) is None:
                 values=cookie.split(":")
-                user=Utilisateur.getUtilisateur(str(values[0].split('=')[1]), update=True)
+                user=Utilisateur.getUtilisateur(str(values[0].split('=')[1].split('|')[0]), update=True)
                 if user:
-                    pseudo="pouet"
+                    pseudo=user.pseudo
                 else:
                     pseudo="defaut"
         else:
@@ -142,35 +142,6 @@ class AfficherTache(Handler):
     def get(self):
         taches = Tache.getTaches()
         self.render("HomePageTache.html",taches = taches)
-
-    def post(self):
-        titre = self.request.get('titre')
-        ville = self.request.get('ville')
-        prix = int(self.request.get('prix'))
-        if not prix:
-            prix=0
-
-        cookie=self.request.cookies.get("user_info")
-        self.write(cookie)
-        if cookie:
-            if Authentification.validCookie(cookie) is None:
-                values=cookie.split(":")
-                user=Utilisateur.getUtilisateur(str(values[0].split('=')[1]), update=True)
-                if user:
-                    pseudo="pouet"
-                else:
-                    pseudo="defaut"
-        else:
-            pseudo="default"
-
-        if titre and ville:
-            tache_objet = Tache(titre=titre, ville=ville, user="%s"%pseudo, prix=prix)
-            tache_objet.put()
-
-            self.redirect('/' )
-        else :
-            error = "Il faut un titre et un contenu"
-            self.render_front(titre=titre, ville=ville, prix=prix, error=error)
 
 class ClearTable(Handler):
         def get(self):
