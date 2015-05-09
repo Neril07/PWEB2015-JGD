@@ -35,35 +35,6 @@ class Handler(webapp2.RequestHandler):
 
 
 
-    def getNomsGroups(self, update=False):
-         groupes = memcache.get('groupes')
-         if (not groupes) or update:
-            groupes = self.getNomsGroupsSansLeCache()
-            memcache.set('groupes', groupes)
-         return groupes
-
-    def getNomsCoursSansLeCache(self):
-       sessionId = self.connexion()
-       contentActif = urllib2.urlopen('https://adeweb.univ-lorraine.fr/jsp/webapi?sessionId=%s&function=getResources&detail=13' % sessionId).read()
-       contentXMLActif = minidom.parseString(contentActif)
-
-       resourcesList = contentXMLActif.getElementsByTagName('resource')
-       listeCours = []
-
-       for resource in resourcesList:
-           if (resource.getAttribute('category')=='category6'):
-               cours = {}
-               cours['name']= resource.getAttribute('name')
-               cours['id'] = resource.getAttribute('id')
-               listeCours.append(cours)
-       return listeCours
-
-    def getNomsCours(self, update=False):
-         courss = memcache.get('cours')
-         if (not courss) or update:
-            courss = self.getNomsCoursSansLeCache()
-            memcache.set('cours', courss)
-         return courss
 
 class MainHandler(Handler):
     def render_font(self):
@@ -154,7 +125,8 @@ class ClearTable(Handler):
 
 
 class TachePage(Handler):
-    def get(self, valeurid):
+    def get(self):
+        valeurid=self.request.get('valeur')
        # test = Tache.getTache(valeurid)
         key = db.Key.from_path('Tache', int(valeurid), parent=Tache.tache_key())
         test = db.get(key)
