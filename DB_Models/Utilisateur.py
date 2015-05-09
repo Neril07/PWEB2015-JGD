@@ -25,6 +25,8 @@ def getUtilisateur(key,update=False):
                 setUtilisateur(utilisateur)
     return utilisateur
 
+def suppUtilisateur(utilisateur):
+    utilisateur.delete()
 
 #@param: utilisateur represente le model ci dessous complete
 def setUtilisateur(utilisateur):

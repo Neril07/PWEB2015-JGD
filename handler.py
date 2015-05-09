@@ -150,4 +150,11 @@ class ClearTable(Handler):
                 Tache.suppTache(tache)
             self.redirect("/")
 
+class ClearUtilisateur(Handler):
+        def get(self):
+            utilisateurs = Utilisateur.getUtilisateur("tous")
+            for utilisateur in utilisateurs :
+                Utilisateur.suppUtilisateur(utilisateur)
+            self.redirect("/")
+
 import Authentification
