@@ -27,5 +27,6 @@ app = webapp2.WSGIApplication([
     ('/logout/?',Authentification.LogOutHandler),
     ('/createTache', handler.Create),
     ('/AfficherTache', handler.AfficherTache),
-    ('/ClearTaches', handler.ClearTable)
+    ('/ClearTaches', handler.ClearTable),
+    ('/Tache/([0-9]+)', handler.TachePage),
 ], debug=True)
