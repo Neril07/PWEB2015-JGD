@@ -1,7 +1,5 @@
 import time
-
-
-
+from DB_Models.Tache import Tache
 
 from handler import Handler
 import hashlib
@@ -24,20 +22,22 @@ def make_secure_val(str):
 
 def validCookie(cookie):
     values=cookie.split(':')
-    """if not(check_secure_val((values[0].split('='))[1]) and check_secure_val((values[1].split('='))[1]) and check_secure_val(values[2].split('=')[1].split('|')[0]) and check_secure_val(values[3].split('=')[1].split('|')[0])):
-       return 'don\'t touch to the cookies!'"""
-    return "pb"
+    if not(check_secure_val((values[0].split('='))[1]) and check_secure_val((values[1].split('='))[1])):
+       return 'don\'t touch to the cookies!'
+    return None
 
 
 def valid(username, pw, cookie):
         values=cookie.split(':')
-        if check_secure_val((values[0].split('='))[1]) and check_secure_val((values[1].split('='))[1]) and check_secure_val(values[2].split('=')[1].split('|')[0]) and check_secure_val(values[3].split('=')[1].split('|')[0]):
+        if check_secure_val((values[0].split('='))[1]) and check_secure_val((values[1].split('='))[1]):
             user=values[0].split('=')[1].split('|')[0]
             password=values[1].split('=')[1].split('|')[0]
             if pw != password or username!=user:
                 return 'Invalid login'
+            else:
+                return None
         else:
-            return 'don\'t touch to the cookies!'
+            return None
 
 
 class RegistrationHandler(Handler):
@@ -114,3 +114,44 @@ class LogOutHandler(Handler):
     def get(self):
         self.response. headers.add_header('Set-Cookie', 'user_info=; Path=/')
         self.redirect('/')
+
+class Create(Handler):
+    def render_front(self, titre="", ville="", prix="", error=""):
+        self.render("create.html", titre=titre, ville=ville, prix=prix, error=error)
+
+
+    def get(self):
+        cookie=self.request.cookies.get("user_info")
+        self.write(cookie)
+        if cookie:
+            if validCookie(cookie) is None:
+                self.render_front()
+            else:
+                self.render("PlzLoginIn.html")
+        else:
+            self.render("PlzLoginIn.html")
+
+    def post(self):
+        titre = self.request.get('titre')
+        ville = self.request.get('ville')
+        prix = int(self.request.get('prix'))
+        if not prix:
+            prix=0
+
+        cookie=self.request.cookies.get("user_info")
+        self.write(cookie)
+        if cookie:
+            if validCookie(cookie) is None:
+                values=cookie.split(":")
+                pseudo=str(Utilisateur.getUtilisateur(str(values[2].split('=')[1]), update=True))
+        else:
+            pseudo="default"
+
+        if titre and ville:
+            tache_objet = Tache(titre=titre, ville=ville, user="%s"%pseudo, prix=prix)
+            tache_objet.put()
+
+            self.redirect('/' )
+        else :
+            error = "Il faut un titre et un contenu"
+            self.render_front(titre=titre, ville=ville, prix=prix, error=error)

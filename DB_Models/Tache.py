@@ -44,9 +44,9 @@ def suppTache(tache):
 
 
 class Tache(db.Model):
-    id=db.StringProperty(required=True)
     titre=db.StringProperty(required=True)
     user=db.StringProperty(required=True)
     ville=db.StringProperty(required=True)
     prix=db.IntegerProperty(default=None)
     participants=db.StringListProperty(default=None)
+    date=db.DateTimeProperty(auto_now_add = True)

@@ -9,10 +9,10 @@ import webapp2
 import jinja2
 
 
+from DB_Models import Tache
 from DB_Models import Utilisateur
 from google.appengine.api import memcache
 import json
-
 
 
 template_dir = os.path.join(os.path.dirname(__file__), 'templates')
@@ -69,36 +69,34 @@ class MainHandler(Handler):
         self.render('HomePage.html')
 
     def get(self):
+        taches= Tache.getTaches(True)
+
         cookie=self.request.cookies.get("user_info")
         self.write(cookie)
         if cookie:
             if Authentification.validCookie(cookie) is None:
                 values=cookie.split(":")
-                utilisateur=Utilisateur.getUtilisateur(values[0])
-                self.redirect("/coursActuel"+str(utilisateur.pseudo))
+                login=Utilisateur.getUtilisateur(values[0].split('=')[1], update=True)
+                self.redirect("/coursActuel" +str(memcache.get('%s'%login)))
             else:
-                self.render("Identification.html")
+                self.render("HomePageTache.html", taches=taches)
         else:
-            self.render("Identification.html")
+            self.render("HomePageTache.html", taches=taches)
 
 
     def post(self):
-        nomUtilisateur = self.request.get('nomUtilisateur').upper()
+        pseudo = self.request.get('nomUtilisateur').upper()
         # on cherche la base de donnees
-        if (not nomUtilisateur):
+        if (not pseudo):
             self.render('Identification.html', erreur="Aucun utilisateur n'a ete entre")
-        elif nomUtilisateur:
+        elif pseudo:
             #user = None
             #assert isinstance(user, model.Professeur)
-            user = Professeur.getProfesseurByName(nomUtilisateur)
-            if len(user)==0:
-                user = Etudiant.getEtudiantByName(nomUtilisateur)
-                if len(user)==0:
-                    self.render('Identification.html', erreur="Nous n avons pas trouve la personne demandee.")
-                else:
-                    self.redirect("/coursActuel"+str(user[0].id))
+            user = Utilisateur.getUtilisateurByPseudo(pseudo)
+            if not user:
+                self.render('Identification.html', erreur="Nous n avons pas trouve la personne demandee.")
             else:
-                self.redirect("/coursActuel"+str(user[0].id))
+                self.redirect("/coursActuel"+str(user.pseudo))
 
 
 

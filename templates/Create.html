@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html>
     <head>
 
@@ -20,11 +21,19 @@
         {% include 'navbar.html' %}
         <div class="container">
             <div class="jumbotron">
-                <br><br>
-                Quel est votre pseudo ?
-                <br>
-                <form method="post" action="/coursActuel">
-                    <input type="text" name="pseudo">
+                <form method="post">
+                    <br><br>
+                    Titre ?
+                    <br>
+                    <input type="text" name="titre">
+                    <br><br>
+                    Ville ?
+                    <br>
+                    <input type="text" name="ville">
+                    <br><br>
+                    Prix ?
+                    <br>
+                    <input type="text" name="prix">
                     <input type="submit" class="btn btn-success">
                     <br><br>
                     <i>{{ erreur }}</i>
@@ -32,11 +41,5 @@
             </div>
         </div>
 
-        <!-- Bootstrap core JavaScript
-        ================================================== -->
-        <!-- Placed at the end of the document so the pages load faster -->
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-        <script src="framework/bootstrap/js/bootstrap.min.js"></script>
-
-    </body>
+  </body>
 </html>

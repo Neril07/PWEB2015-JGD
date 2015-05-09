@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html>
     <head>
 
@@ -18,6 +19,7 @@
     <body>
 
         {% include 'navbar.html' %}
+
         <div class="container">
             <div class="jumbotron">
                 <br><br>
@@ -32,7 +34,31 @@
             </div>
         </div>
 
-        <!-- Bootstrap core JavaScript
+        {% for tache in taches %}
+    	    <div class="container">
+            <div class="jumbotron">
+                <br><br>
+                <div class="content-subject">{{tache.titre}}</div>
+                <br>
+                <br><br>
+    		    <div class="created">Date : {{tache.date}}</div>
+    		    <br>
+                <br><br>
+    		    <div class="by">By : {{tache.user}}</div>
+    		    <br>
+                <br><br>
+                <div class="from">From :{{tache.ville}}</div>
+                <br>
+                <br><br>
+                <div class="prix">Prix :{{tache.prix}}</div>
+                <br>
+            </div>
+            </div>
+            </div>
+            <hr>
+        {% endfor %}
+
+    <!-- Bootstrap core JavaScript
         ================================================== -->
         <!-- Placed at the end of the document so the pages load faster -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
