@@ -15,6 +15,7 @@ from google.appengine.api import memcache
 import json
 
 
+
 template_dir = os.path.join(os.path.dirname(__file__), 'templates')
 jinja_env = jinja2.Environment(loader = jinja2.FileSystemLoader(template_dir), autoescape=True)
 
@@ -66,7 +67,7 @@ class Handler(webapp2.RequestHandler):
 
 class MainHandler(Handler):
     def render_font(self):
-        self.render('HomePage.html')
+        self.render('HomePageTache.html')
 
     def get(self):
         taches= Tache.getTaches(True)
@@ -77,7 +78,8 @@ class MainHandler(Handler):
             if Authentification.validCookie(cookie) is None:
                 values=cookie.split(":")
                 login=Utilisateur.getUtilisateur(values[0].split('=')[1], update=True)
-                self.redirect("/coursActuel" +str(memcache.get('%s'%login)))
+                #self.redirect("/" +str(memcache.get('%s'%login)))
+                self.render("HomePageTache.html", taches=taches)
             else:
                 self.render("HomePageTache.html", taches=taches)
         else:
@@ -98,6 +100,78 @@ class MainHandler(Handler):
             else:
                 self.redirect("/coursActuel"+str(user.pseudo))
 
+class Create(Handler):
+    def render_front(self, titre="", ville="", prix="", error="",user=""):
+        #user = self.request.cookies.get("user_info")
+        self.render("create.html", titre=titre, ville=ville, prix=prix, error=error,user = user)
 
+
+    def get(self):
+        cookie=self.request.cookies.get("user_info")
+        self.write(cookie)
+        if cookie:
+            if Authentification.validCookie(cookie) is None:
+                self.render_front()
+            else:
+                self.render("PlzLoginIn.html")
+        else:
+            self.render("PlzLoginIn.html")
+
+    def post(self):
+        titre = self.request.get('titre')
+        ville = self.request.get('ville')
+        if (self.request.get('prix').isdigit()):
+            prix = int(self.request.get('prix'))
+        else:
+            prix = 0
+        if not prix:
+            prix=0
+
+        cookie=self.request.cookies.get("user_info")
+        self.write(cookie)
+        if cookie:
+            if Authentification.validCookie(cookie) is None:
+                values=cookie.split(":")
+                pseudo=str(Utilisateur.getUtilisateur(str(values[2].split('=')[1]), update=True))
+        else:
+            pseudo="default"
+
+        if titre and ville:
+            Tache.setTache(titre=titre, ville=ville, pseudo="%s"%pseudo, prix=prix)
+            self.redirect('/' )
+        else :
+            error = "Il faut un titre et un contenu"
+            self.render_front(titre=titre, ville=ville, prix=prix, error=error)
+
+class AfficherTache(Handler):
+
+    def get(self):
+        taches = Tache.getTaches()
+        self.render("HomePageTache.html")
+
+    def post(self):
+        titre = self.request.get('titre')
+        ville = self.request.get('ville')
+        prix = int(self.request.get('prix'))
+        if not prix:
+            prix=0
+
+        cookie=self.request.cookies.get("user_info")
+        self.write(cookie)
+        if cookie:
+            if Authentification.validCookie(cookie) is None:
+                values=cookie.split(":")
+                pseudo=str(Utilisateur.getUtilisateur(str(values[2].split('=')[1]), update=True))
+        else:
+            pseudo="default"
+
+        if titre and ville:
+            tache_objet = Tache(titre=titre, ville=ville, user="%s"%pseudo, prix=prix)
+            tache_objet.put()
+
+            self.redirect('/' )
+        else :
+            error = "Il faut un titre et un contenu"
+            self.render_front(titre=titre, ville=ville, prix=prix, error=error)
 
 import Authentification

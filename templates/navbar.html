@@ -9,25 +9,23 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="/">CoupDeMain</a>
+          <a class="navbar-brand" href="/">CoupdePouce</a>
         </div>
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
-            <li><a href="/">Cours actuel</a></li>
-            <li><a href="/listeAbsences">Liste des Absences</a></li>
-            <li><a href="/compoGroupes">Composition des Groupes</a></li>
+              <li><a href="/AfficherTache">Afficher Taches</a></li>
+              <li><a href="/createTache">Création Tache</a></li>
           </ul>
 
           {% if cookie %}
           <ul class="nav navbar-nav navbar-right">
-            <li><a href="/justif">Justification des absences</a></li>
-            <li><a href="/Administration">Administration</a></li>
+
             <li><a href="/logout">LogOut</a></li>
           </ul>
 
           {% else %}
           <ul class="nav navbar-nav navbar-right">
-            <li><a href="/justif">Justification des absences</a></li>
+
             <li><a href="/Administration">Administration</a></li>
             <li><a href="/login">Login</a></li>
             <li><a href="/signin">Register</a></li>

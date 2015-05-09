@@ -1,7 +1,11 @@
-__author__ = 'Harmore'
+
 
 from google.appengine.ext import db
 from google.appengine.api import memcache
+
+def tache_key(name = 'default'):
+    return db.Key.from_path('taches', name)
+
 
 #@param: key represente l'id de la tache voulue ou "tous" si jamais on veut toutes les taches
 #@param: update indique si il faut mettre a jour le cache
@@ -50,3 +54,8 @@ class Tache(db.Model):
     prix=db.IntegerProperty(default=None)
     participants=db.StringListProperty(default=None)
     date=db.DateTimeProperty(auto_now_add = True)
+
+def setTache(titre,ville,pseudo,prix):
+    t = Tache(parent=tache_key(),titre=titre, ville=ville, user="%s"%pseudo, prix=prix)
+    t.put()
+    return t.key().id()

@@ -25,5 +25,6 @@ app = webapp2.WSGIApplication([
     ('/signin/?',Authentification.RegistrationHandler),
     ('/login/?',Authentification.LoginHandler),
     ('/logout/?',Authentification.LogOutHandler),
-    ('/createTache', Authentification.Create)
+    ('/createTache', handler.Create),
+    ('/AfficherTache', handler.AfficherTache)
 ], debug=True)
