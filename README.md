@@ -16,9 +16,10 @@ Accès à l'accueil des taches créées mais il manque l'affichage du créateur 
 09/05 17:25
 To Do :
 
-- problèmes de l'affichage de l'utilisateur
+- problèmes de l'affichage de l'utilisateur => corrigé
 - problèmes de la redirection après un ajout
 - s'inscrire à une tache
+- possibilité de faire une recherche sur la ville ou le pseudo de l'émetteur d'une tache => OK
 
 - Optionnel : planning de ses taches
 - Optionnel : Categories + tags

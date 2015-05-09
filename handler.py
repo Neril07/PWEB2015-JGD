@@ -131,7 +131,7 @@ class Create(Handler):
 
         if titre and ville:
             desc = self.request.get('description')
-            Tache.setTache(titre=titre, ville=ville, user="%s"%pseudo, prix=prix,desc = desc)
+            Tache.setTache(titre=titre, ville=ville.upper(), user="%s"%pseudo, prix=prix,desc = desc)
             self.redirect('/AfficherTache' )
         else :
             error = "Il faut un titre et un contenu"
