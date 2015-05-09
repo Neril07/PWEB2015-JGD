@@ -28,34 +28,30 @@
             </div>
         </div>
 
-        {% for tache in taches %}
+
     	    <div class="container">
             <div class="jumbotron">
                 <br><br>
                 <div class="content-subject">{{tache.titre}}</div>
-                <br>
-                <div class="PermaLink">
-                    <li><a href="/Tache/{{ tache.key().id() }}">Lien pour l'activité </a></li>
-                </div>
+                <br><br>
     		    <div class="created"><u>Date</u> : {{tache.date}}</div>
 
-                <br>
+                <br><br>
     		    <div class="by"><u>By</u> : {{tache.user}}</div>
 
-                <br>
+                <br><br>
                 <div class="from"><u>From</u> :{{tache.ville}}</div>
 
-                <br>
+                <br><br>
                 <div class="prix"><u>Prix</u> :{{tache.prix}}</div>
 
-                <br>
+                <br><br>
                 <div class="prix"><u> Description</u> : <br>{{tache.desc}}</div>
                 <br>
             </div>
             </div>
             </div>
             <hr>
-        {% endfor %}
 
     <!-- Bootstrap core JavaScript
         ================================================== -->

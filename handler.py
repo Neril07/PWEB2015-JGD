@@ -150,11 +150,23 @@ class ClearTable(Handler):
                 Tache.suppTache(tache)
             self.redirect("/")
 
+
+
+class TachePage(Handler):
+    def get(self, post_id):
+        tache = Tache.getTache(post_id)
+        self.render("Tache.html", tache = tache)
+        if not tache:
+            self.error(404)
+            return
+        self.render("Tache.html", tache = tache)
+
 class ClearUtilisateur(Handler):
         def get(self):
             utilisateurs = Utilisateur.getUtilisateur("tous")
             for utilisateur in utilisateurs :
                 Utilisateur.suppUtilisateur(utilisateur)
             self.redirect("/")
+
 
 import Authentification
