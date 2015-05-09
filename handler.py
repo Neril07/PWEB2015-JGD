@@ -121,7 +121,11 @@ class Create(Handler):
         if cookie:
             if Authentification.validCookie(cookie) is None:
                 values=cookie.split(":")
-                pseudo=str(Utilisateur.getUtilisateur(str(values[2].split('=')[1]), update=True))
+                user=Utilisateur.getUtilisateur(str(values[0].split('=')[1]), update=True)
+                if user:
+                    pseudo="pouet"
+                else:
+                    pseudo="defaut"
         else:
             pseudo="default"
 
@@ -151,7 +155,11 @@ class AfficherTache(Handler):
         if cookie:
             if Authentification.validCookie(cookie) is None:
                 values=cookie.split(":")
-                pseudo=str(Utilisateur.getUtilisateur(str(values[2].split('=')[1]), update=True))
+                user=Utilisateur.getUtilisateur(str(values[0].split('=')[1]), update=True)
+                if user:
+                    pseudo="pouet"
+                else:
+                    pseudo="defaut"
         else:
             pseudo="default"
 

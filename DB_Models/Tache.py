@@ -30,7 +30,7 @@ def setTache(tache):
 def getTaches(update=False):
     taches = memcache.get('taches')
     if (not taches) or update:
-        taches = db.GqlQuery("SELECT * FROM Tache ORDER BY titre")
+        taches = db.GqlQuery("SELECT * FROM Tache ORDER BY date DESC")
         memcache.set('taches', taches)
     return taches
 
