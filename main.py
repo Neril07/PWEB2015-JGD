@@ -28,5 +28,9 @@ app = webapp2.WSGIApplication([
     ('/createTache', handler.Create),
     ('/AfficherTache', handler.AfficherTache),
     ('/ClearTaches', handler.ClearTable),
+<<<<<<< HEAD
     ('/Tache/([0-9]+)', handler.TachePage),
+=======
+    ('/')
+>>>>>>> origin/master
 ], debug=True)
