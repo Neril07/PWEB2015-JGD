@@ -38,10 +38,14 @@ class Recherche(Handler) :
                 taches=Tache.getTacheByVille(str(recherche.upper()))
                 if not taches :
                     error="Aucun resultat (Pas de sensibilite a la casse)"
-            else :
+            elif type=="Pseudp" :
                 taches=Tache.getTacheByUsername(str(recherche))
                 if not taches :
                     error="Aucun resultat (Sensibilite a la casse)"
+            else :
+                taches=Tache.getTacheByTag(recherche)
+                if not taches:
+                    error="Pas de resultat pour ce tag (Sensibilite a la casse)"
 
             self.render("Recherche.html", recherche=recherche, taches=taches, erreur=error)
 
