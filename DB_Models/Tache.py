@@ -42,6 +42,10 @@ def getTacheByVille(ville):
     tache = db.GqlQuery("SELECT * FROM Tache WHERE ville = '%s' ORDER BY date DESC" % ville).fetch(limit=None)
     return tache
 
+def getTacheByTag(tag) :
+    tache = db.GqlQuery("SELECT * FROM Tache WHERE tags = '%s' ORDER BY date DESC" % tag)
+    return tache
+
 def suppTache(tache):
     tache.delete()
 

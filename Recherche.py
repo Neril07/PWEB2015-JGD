@@ -15,7 +15,15 @@ class Recherche(Handler) :
         self.render("Recherche.html", recherche=recherche, erreur=erreur)
 
     def get(self):
-        self.render("Recherche.html")
+        tag=self.request.get('tag')
+        if not tag :
+            self.render("Recherche.html")
+        else:
+            erreur=""
+            taches=Tache.getTacheByTag(tag)
+            if not taches:
+                erreur="Pas de resultat pour ce tag"
+            self.render("Recherche.html", taches=taches, erreur=erreur)
 
     def post(self):
         recherche=self.request.get('recherche')

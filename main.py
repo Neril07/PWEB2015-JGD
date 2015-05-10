@@ -29,7 +29,7 @@ app = webapp2.WSGIApplication([
     ('/createTache', handler.Create),
     ('/AfficherTache', handler.AfficherTache),
     ('/ClearTaches', handler.ClearTable),
-    ('/recherche', Recherche.Recherche),
+    ('/recherche/?', Recherche.Recherche),
     ('/Tache/?', handler.TachePage),
     ('/inscrire/?', handler.InscrireTache),
     ('/deinscrire/?', handler.DeInscrireTache),

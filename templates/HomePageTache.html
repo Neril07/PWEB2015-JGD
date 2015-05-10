@@ -55,7 +55,7 @@
                 <br>
                 <div class="tags"><u> Tags</u> : <br></div>
                 {% for t in tache.tags %}
-                    {{ t }}<br>
+                    <li><a href="/recherche?tag={{ t }}">#{{ t }}</a></li><br>
                 {% endfor %}
                 <br>
             </div>
