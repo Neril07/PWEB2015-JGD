@@ -18,7 +18,9 @@ To Do :
 
 - problèmes de l'affichage de l'utilisateur
 - problèmes de la redirection après un ajout
-- s'inscrire à une tache
+- s'inscrire à une tache => OK
+- supprimer une tache
 
+- Optionnel : Géolocalisation
 - Optionnel : planning de ses taches
 - Optionnel : Categories + tags
