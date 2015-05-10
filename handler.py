@@ -149,6 +149,14 @@ class DeInscrireTache(Handler):
         tache = Tache.UpdateTache(valeurid,user,False)
         self.redirect('/Tache?valeur=%s' %valeurid)
 
+class SuppTache(Handler):
+    def get(self):
+        valeurid=self.request.get('valeur')
+        cookie=self.request.cookies.get("user_info")
+        user = (cookie.split('|')[0]).split('=')[1]
+        tache = Tache.getTache(valeurid)
+        Tache.suppTache(tache)
+        self.redirect('/')
 
 class ClearUtilisateur(Handler):
         def get(self):
