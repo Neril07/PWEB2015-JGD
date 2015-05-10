@@ -49,7 +49,14 @@
                 <div class="prix"><u>Prix</u> :{{tache.prix}}</div>
 
                 <br>
-                <div class="prix"><u> Description</u> : <br>{{tache.desc}}</div>
+                <div class="desc"><u> Description</u> : <br>{{tache.desc}}</div>
+                <br>
+
+                <br>
+                <div class="tags"><u> Tags</u> : <br></div>
+                {% for t in tache.tags %}
+                    {{ t }}<br>
+                {% endfor %}
                 <br>
             </div>
             </div>

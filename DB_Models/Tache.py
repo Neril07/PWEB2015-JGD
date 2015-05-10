@@ -54,6 +54,7 @@ class Tache(db.Model):
     participants=db.StringListProperty(default=None)
     date=db.DateTimeProperty(auto_now_add = True)
     desc = db.TextProperty(required=False)
+    tags=db.StringListProperty(required=True)
 
 
 def setTache(titre,ville,user,prix,desc):
@@ -69,5 +70,16 @@ def UpdateTache(valeurid,user,ajouter):
             tache.put()
     else:
         tache.participants.remove(user)
+        tache.put()
+    return tache
+
+def UpdateTagsTache(valeurid,tag,ajouter):
+    tache = getTache(valeurid)
+    if (ajouter):
+        if not(tag in tache.tags):
+            tache.tags.append(tag)
+            tache.put()
+    else:
+        tache.tags.remove(tag)
         tache.put()
     return tache
