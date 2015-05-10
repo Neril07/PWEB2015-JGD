@@ -34,6 +34,10 @@
                 <br>
                 <div class="content-subject">{{tache.titre}}</div>
                 <br>
+            {% if tache.user == (cookie.split('|')[0]).split('=')[1] %}
+                <li><a href="/supprimer?valeur={{ tache.key().id() }}">Supprimer l'événement  </a></li>
+            {% endif %}
+
     		    <div class="created"><u>Date</u> : {{tache.date}}</div>
 
                 <br>
