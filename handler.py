@@ -136,9 +136,18 @@ class TachePage(Handler):
 class InscrireTache(Handler):
     def get(self):
         valeurid=self.request.get('valeur')
-        tache = Tache.UpdateTache(valeurid,'utilisateur')
+        cookie=self.request.cookies.get("user_info")
+        user = (cookie.split('|')[0]).split('=')[1]
+        tache = Tache.UpdateTache(valeurid,user,True)
         self.redirect('/Tache?valeur=%s' %valeurid)
-        #self.render("Inscrire.html",tache = tache)
+
+class DeInscrireTache(Handler):
+    def get(self):
+        valeurid=self.request.get('valeur')
+        cookie=self.request.cookies.get("user_info")
+        user = (cookie.split('|')[0]).split('=')[1]
+        tache = Tache.UpdateTache(valeurid,user,False)
+        self.redirect('/Tache?valeur=%s' %valeurid)
 
 
 class ClearUtilisateur(Handler):

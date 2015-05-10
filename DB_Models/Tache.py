@@ -61,9 +61,13 @@ def setTache(titre,ville,user,prix,desc):
     t.put()
     return t.key().id()
 
-def UpdateTache(valeurid,user):
+def UpdateTache(valeurid,user,ajouter):
     tache = getTache(valeurid)
-    if not(user in tache.participants):
-        tache.participants.append(user)
+    if (ajouter):
+        if not(user in tache.participants):
+            tache.participants.append(user)
+            tache.put()
+    else:
+        tache.participants.remove(user)
         tache.put()
     return tache

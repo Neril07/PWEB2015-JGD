@@ -50,10 +50,17 @@
                 <br>
                 <div class="Participants"><u> Participants</u> : <br></div>
                 {% for p in tache.participants %}
-                    {{ p }}
+                    {{ p }}<br>
                 {% endfor %}
                 <br>
-                <li><a href="/inscrire?valeur={{ tache.key().id() }}">S'ajouter à l'événement  </a></li>
+            {% if cookie %}
+                {% if (cookie.split('|')[0]).split('=')[1] in tache.participants %}
+                    <li><a href="/deinscrire?valeur={{ tache.key().id() }}">S'enlever de l'événement  </a></li>
+                {% else %}
+                    <li><a href="/inscrire?valeur={{ tache.key().id() }}">S'ajouter à l'événement  </a></li>
+                {% endif %}
+
+            {% endif %}
             </div>
             </div>
             </div>
