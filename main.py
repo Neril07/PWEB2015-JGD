@@ -32,4 +32,5 @@ app = webapp2.WSGIApplication([
     ('/recherche', Recherche.Recherche),
     ('/Tache/?', handler.TachePage),
     ('/inscrire/?', handler.InscrireTache),
+    ('/perso', Recherche.PagePerso)
     ], debug=True)
