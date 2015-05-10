@@ -23,9 +23,9 @@
                 <br><br>
                 Mettez votre critère de recherche :
                 <br>
-                <form method="post" action="/coursActuel">
+                <form method="post">
                     <input type="text" name="recherche">
-                    <select name=""type">
+                    <select name="type">
                         <option value="Ville">Ville</option>
                         <option value="Pseudo">Pseudo</option>
                     </select>
@@ -36,6 +36,35 @@
                 </form>
             </div>
         </div>
+
+
+        {% for tache in taches %}
+            <div class="container">
+            <div class="jumbotron">
+                <br><br>
+                <div class="content-subject">{{tache.titre}}</div>
+                <br>
+                <div class="PermaLink">
+                    <li><a href="/Tache/{{ tache.key().id() }}">Lien pour l'activité </a></li>
+                </div>
+    		    <div class="created"><u>Date</u> : {{tache.date}}</div>
+
+                <br>
+    		    <div class="by"><u>By</u> : {{tache.user}}</div>
+
+                <br>
+                <div class="from"><u>From</u> :{{tache.ville}}</div>
+
+                <br>
+                <div class="prix"><u>Prix</u> :{{tache.prix}}</div>
+
+                <br>
+                <div class="prix"><u> Description</u> : <br>{{tache.desc}}</div>
+                <br>
+            </div>
+            </div>
+            <hr>
+        {% endfor %}
 
         <!-- Bootstrap core JavaScript
         ================================================== -->
