@@ -1,5 +1,5 @@
 
-
+import json
 from google.appengine.ext import db
 from google.appengine.api import memcache
 
@@ -16,10 +16,9 @@ def getTache(key,update=False):
             tache=db.GqlQuery("SELECT * FROM tache ORDER BY titre ASC").fetch(limit=None)
             memcache.set("T"+key,tache)
         else:
-            tache=db.GqlQuery("SELECT * FROM Tache WHERE id= '%s'"%key).fetch(limit=1)
-            if tache:
-                tache=tache[0]
-                setTache(tache)
+            key = db.Key.from_path('Tache', int(key), parent=tache_key(name = 'default'))
+            tache = db.get(key)
+
     return tache
 
 #@param: tache represente le modele ci dessous complete
@@ -56,7 +55,15 @@ class Tache(db.Model):
     date=db.DateTimeProperty(auto_now_add = True)
     desc = db.TextProperty(required=False)
 
+
 def setTache(titre,ville,user,prix,desc):
     t = Tache(parent=tache_key(),titre=titre, ville=ville, user="%s"%user, prix=prix,desc = desc)
     t.put()
     return t.key().id()
+
+def UpdateTache(valeurid,user):
+    tache = getTache(valeurid)
+    if not(user in tache.participants):
+        tache.participants.append(user)
+        tache.put()
+    return tache

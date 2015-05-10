@@ -31,23 +31,29 @@
 
     	    <div class="container">
             <div class="jumbotron">
-                <br><br>
+                <br>
                 <div class="content-subject">{{tache.titre}}</div>
-                <br><br>
+                <br>
     		    <div class="created"><u>Date</u> : {{tache.date}}</div>
 
-                <br><br>
+                <br>
     		    <div class="by"><u>By</u> : {{tache.user}}</div>
 
-                <br><br>
+                <br>
                 <div class="from"><u>From</u> :{{tache.ville}}</div>
 
-                <br><br>
+                <br>
                 <div class="prix"><u>Prix</u> :{{tache.prix}}</div>
 
-                <br><br>
+                <br>
                 <div class="prix"><u> Description</u> : <br>{{tache.desc}}</div>
                 <br>
+                <div class="Participants"><u> Participants</u> : <br></div>
+                {% for p in tache.participants %}
+                    {{ p }}
+                {% endfor %}
+                <br>
+                <li><a href="/inscrire?valeur={{ tache.key().id() }}">S'ajouter à l'événement  </a></li>
             </div>
             </div>
             </div>

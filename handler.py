@@ -63,7 +63,7 @@ class MainHandler(Handler):
 class Create(Handler):
     def render_front(self, titre="", ville="", prix="", error="",user=""):
         #user = self.request.cookies.get("user_info")
-        self.render("create.html", titre=titre, ville=ville, prix=prix, error=error,user = user)
+        self.render("Create.html", titre=titre, ville=ville, prix=prix, error=error,user = user)
 
 
     def get(self):
@@ -132,6 +132,14 @@ class TachePage(Handler):
         test = db.get(key)
         #taches = Tache.getTaches()
         self.render("Tache.html",tache = test)
+
+class InscrireTache(Handler):
+    def get(self):
+        valeurid=self.request.get('valeur')
+        tache = Tache.UpdateTache(valeurid,'utilisateur')
+        self.redirect('/Tache?valeur=%s' %valeurid)
+        #self.render("Inscrire.html",tache = tache)
+
 
 class ClearUtilisateur(Handler):
         def get(self):
