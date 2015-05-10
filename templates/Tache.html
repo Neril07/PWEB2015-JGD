@@ -57,6 +57,11 @@
                     {{ p }}<br>
                 {% endfor %}
                 <br>
+                <div class="tags"><u> Tags</u> : <br></div>
+                {% for t in tache.tags %}
+                    {{ t }}<br>
+                {% endfor %}
+                <br>
             {% if cookie %}
                 {% if (cookie.split('|')[0]).split('=')[1] in tache.participants %}
                     <li><a href="/deinscrire?valeur={{ tache.key().id() }}">S'enlever de l'événement  </a></li>
