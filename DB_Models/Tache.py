@@ -13,7 +13,7 @@ def getTache(key,update=False):
     tache=memcache.get("E"+key)
     if tache is None or update:
         if key=="tous":
-            tache=db.GqlQuery("SELECT * FROM tache ORDER BY titre ASC").fetch(limit=None)
+            tache=db.GqlQuery("SELECT * FROM tache ORDER BY date DESC").fetch(limit=None)
             memcache.set("T"+key,tache)
         else:
             key = db.Key.from_path('Tache', int(key), parent=tache_key(name = 'default'))
@@ -35,11 +35,11 @@ def getTaches(update=False):
 
 
 def getTacheByUsername(user):
-    tache = db.GqlQuery("SELECT * FROM Tache WHERE user = '%s'" % user).fetch(limit=None)
+    tache = db.GqlQuery("SELECT * FROM Tache WHERE user = '%s' ORDER BY date DESC" % user).fetch(limit=None)
     return tache
 
 def getTacheByVille(ville):
-    tache = db.GqlQuery("SELECT * FROM Tache WHERE ville = '%s'" % ville).fetch(limit=None)
+    tache = db.GqlQuery("SELECT * FROM Tache WHERE ville = '%s' ORDER BY date DESC" % ville).fetch(limit=None)
     return tache
 
 def suppTache(tache):

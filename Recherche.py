@@ -46,7 +46,8 @@ class PagePerso(Handler):
                 values=cookie.split(":")
                 user=Utilisateur.getUtilisateur(str(values[0].split('=')[1].split('|')[0]), update=True)
                 if user:
-                   self.render("Utilisateur.html",utilisateur=user)
+                    TacheUser = Tache.getTaches()
+                    self.render("Utilisateur.html",utilisateur=user,TacheUser=TacheUser)
                 else :
                     self.render("Utilisateur.html")
         else:

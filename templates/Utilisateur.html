@@ -19,6 +19,8 @@
     <body>
 
         {% include 'navbar.html' %}
+
+        <h2>Informations générales</h2>
         <div class="container">
             <div class="jumbotron">
 
@@ -34,6 +36,37 @@
 
             </div>
         </div>
+
+        <h2>Taches assignés à l'utilisateur</h2>
+            {% for tache in TacheUser %}
+            {% if (cookie.split('|')[0]).split('=')[1] in tache.participants %}
+                <div class="container">
+                <div class="jumbotron">
+                    <br><br>
+                    <div class="content-subject">{{tache.titre}}</div>
+                    <br>
+                    <div class="PermaLink">
+                        <li><a href="/Tache?valeur={{ tache.key().id() }}">Lien pour l'activité </a></li>
+                    </div>
+                    <div class="created"><u>Date</u> : {{tache.date}}</div>
+
+                    <br>
+                    <div class="by"><u>By</u> : {{tache.user}}</div>
+
+                    <br>
+                    <div class="from"><u>From</u> :{{tache.ville}}</div>
+
+                    <br>
+                    <div class="prix"><u>Prix</u> :{{tache.prix}}</div>
+
+                    <br>
+                    <div class="prix"><u> Description</u> : <br>{{tache.desc}}</div>
+                    <br>
+                </div>
+                </div>
+                <hr>
+            {% endif %}
+            {% endfor %}
 
   </body>
 </html>
