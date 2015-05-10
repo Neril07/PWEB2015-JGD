@@ -10,7 +10,7 @@ def tache_key(name = 'default'):
 #@param: key represente l'id de la tache voulue ou "tous" si jamais on veut toutes les taches
 #@param: update indique si il faut mettre a jour le cache
 def getTache(key,update=False):
-    tache=memcache.get("E"+key)
+    tache=memcache.get("E"+str(key))
     if tache is None or update:
         if key=="tous":
             tache=db.GqlQuery("SELECT * FROM tache ORDER BY date DESC").fetch(limit=None)

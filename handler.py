@@ -4,6 +4,7 @@ import os
 import urllib2
 from xml.dom import minidom
 import time
+import re
 
 import webapp2
 import jinja2
@@ -38,7 +39,6 @@ class Handler(webapp2.RequestHandler):
 
 class MainHandler(Handler):
     def render_font(self):
-
         taches= Tache.getTaches(True)
         self.render('HomePageTache.html',taches = taches)
 
@@ -61,10 +61,14 @@ class MainHandler(Handler):
 
 
 class Create(Handler):
-    def render_front(self, titre="", ville="", prix="", error="",user=""):
+    def render_front(self, titre="", ville="", prix="", error="",user="", desc="", tags=""):
         #user = self.request.cookies.get("user_info")
-        self.render("Create.html", titre=titre, ville=ville, prix=prix, error=error,user = user)
+        self.render("Create.html", titre=titre, ville=ville, prix=prix, erreur=error,user = user, desc=desc, tags=tags)
 
+    def tagUnvalid(self, tag):
+        if tag:
+            if not re.match("^[\sa-zA-Z0-9_-]{3,20}$" , tag):
+                return 'tag is unvalid!'
 
     def get(self):
         cookie=self.request.cookies.get("user_info")
@@ -80,6 +84,7 @@ class Create(Handler):
     def post(self):
         titre = self.request.get('titre')
         ville = self.request.get('ville')
+
         if (self.request.get('prix').isdigit()):
             prix = int(self.request.get('prix'))
         else:
@@ -102,8 +107,26 @@ class Create(Handler):
 
         if titre and ville:
             desc = self.request.get('description')
-            Tache.setTache(titre=titre, ville=ville, user="%s"%pseudo, prix=prix,desc = desc)
-            self.redirect('/AfficherTache' )
+            tag=self.request.get('tags')
+            error=""
+            if tag :
+                tags=tag.split(';')
+                tache_id=Tache.setTache(titre=titre, ville=ville, user="%s"%pseudo, prix=prix,desc = desc)
+                tache=Tache.getTache(tache_id)
+                for t in tags:
+                    if self.tagUnvalid(t) is None:
+                        Tache.UpdateTagsTache(tache_id, t, True)
+                    else:
+                        error ="Il faut un tag correct (#tag1; #tag2)"
+                if error=="":
+                    self.redirect("/AfficherTache")
+
+                else:
+                    Tache.suppTache(tache)
+                    self.render_front(titre=titre, ville=ville, prix=prix, desc=desc, error=error)
+            else:
+                error = "Il faut un ou des tags"
+                self.render_front(titre=titre, ville=ville, prix=prix,desc=desc, error=error)
         else :
             error = "Il faut un titre et un contenu"
             self.render_front(titre=titre, ville=ville, prix=prix, error=error)
