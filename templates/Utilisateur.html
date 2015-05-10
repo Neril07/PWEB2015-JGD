@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="">
+        <meta name="author" content="">
+
+
+        <title>CoupDeMain</title>
+
+        <!-- Bootstrap core CSS -->
+        <link href="framework/bootstrap/css/bootstrap.css" rel="stylesheet">
+        <link href="stylesheets/customize.css"  rel="stylesheet">
+    </head>
+    <body>
+
+        {% include 'navbar.html' %}
+        <div class="container">
+            <div class="jumbotron">
+
+                <br>
+    		    <div class="created"><u>Login</u> : {{utilisateur.login}}</div>
+
+                <br>
+    		    <div class="by"><u>Mot de passe</u> : {{utilisateur.mdp.split('|')[0]}}</div>
+
+                <br>
+                <div class="from"><u>Pseudo</u> :{{utilisateur.pseudo}}</div>
+
+
+            </div>
+        </div>
+
+  </body>
+</html>
